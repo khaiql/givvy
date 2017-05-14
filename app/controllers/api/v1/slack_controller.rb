@@ -61,18 +61,18 @@ class API::V1::SlackController < API::V1::APIController
     private_text = I18n.t('slack.gave_successful', recipient:recipient.username, points: points, allowance: user.allowance)
     attchs = [{
                 title: message,
-                color: "#00AADE",
+                color: '#00AADE',
                 image_url: "#{request.protocol}#{request.host_with_port}/api/v1/slack_photo?s=#{user.username}&r=#{recipient.username}",
               }]
 
     # Announcement to in_channel or public
-    if ENV['ANNOUNCE_MODE'] == "in_channel"
+    if ENV['ANNOUNCE_MODE'] == 'in_channel'
       Thread.new {
         post_to_slack(channel: user.username, text: private_text)
       }
       render json: {
-        response_type: "in_channel",
-        pase: "full",
+        response_type: 'in_channel',
+        parse: 'full',
         text: public_text,
         attachments: attchs
       }
