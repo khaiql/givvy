@@ -5,7 +5,7 @@ namespace :users do
     include ApplicationHelper
 
     # Update/create members from Slack
-    raw = Net::HTTP.get(URI("https://slack.com/api/users.list?token=" + ENV["SLACK_TOKEN"]))
+    raw = Net::HTTP.get(URI("https://slack.com/api/users.list?presence=false&token=" + ENV["SLACK_TOKEN"]))
     json = JSON.parse(raw)
     members = json['members']
     members.each do |m|
