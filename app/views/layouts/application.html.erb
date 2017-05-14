@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Givvy</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <div class="container">
+
+      <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <h1 class="navbar-brand mb-0">Givvy</h1>
+
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/users">Users</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/rewards">Rewards</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/groups">Groups</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/transactions">Transactions</a>
+          </li>
+        </ul>
+      </nav>
+
+        <% flash.each do |name, msg| %>
+            <%= content_tag(:div, msg, class: "alert alert-info") %>
+        <% end %>
+        <%= yield %>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,32 @@
+%p#notice= notice
+
+.container
+  .row
+    .col
+      %h1 Transactions
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th Time
+      %th Sender
+      %th Recipient
+      %th Amount
+      %th Message
+      %th Tags
+      %th Type
+      %th Group
+  %tbody
+    - @transactions.each do |transaction|
+      %tr
+        %td= format_time(time: transaction.created_at)
+        %td= transaction.sender.username
+        %td= transaction.recipient.username
+        %td= transaction.amount
+        %td= transaction.message
+        %td= transaction.tags.try(:join,' ')
+        %td= transaction.transaction_type.capitalize
+        %td= transaction.group
+
+.text-right
+  = will_paginate @transactions, renderer: WillPaginate::ActionView::BootstrapLinkRenderer

@@ -1,0 +1,21 @@
+development:
+  host: localhost
+  adapter: postgresql
+  encoding: unicode
+  database: givvy-dev
+  pool: 50
+
+test:
+  host: localhost
+  adapter: postgresql
+  encoding: unicode
+  database: givvy-test
+  pool: 5
+
+production:
+  host: localhost
+  adapter: postgresql
+  encoding: unicode
+  database: givvy-prod
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  timeout: 5000

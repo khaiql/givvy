@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @group.name %>
+</p>
+
+<p>
+  <strong>Tags:</strong>
+  <%= @group.tags %>
+</p>
+
+<p>
+  <strong>Slack channel:</strong>
+  <%= @group.slack_channel %>
+</p>
+
+<p>
+  <strong>Default:</strong>
+  <%= @group.default %>
+</p>
+
+<%= link_to 'Edit', edit_group_path(@group) %> |
+<%= link_to 'Back', groups_path %>

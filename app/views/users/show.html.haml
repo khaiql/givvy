@@ -1,0 +1,43 @@
+%p#notice= notice
+
+.container
+  .row
+    .col
+      %h1= @user.username
+    .col.text-right
+      = link_to users_path do
+        .btn.btn-secondary Back
+
+%hr
+
+%ul
+  - @transactions.each do |t|
+    %li
+      = format_time(time:t.created_at)
+      \:
+      - if t.regular?
+        - if t.sender_id == @user.id
+          gave
+          %b= t.recipient.username
+          .badge.badge-danger
+            = t.amount
+            ♡
+          %i= t.message
+        - else
+          received from 
+          %b= t.sender.username
+          .badge.badge-success
+            = t.amount
+            ♡ 
+          %i= t.message
+      - if t.redemption?
+        redeemed 
+        %b=t.message
+        for
+        .badge.badge-warning
+          %b=t.amount
+          ♡
+      - if t.monthly_reset?
+        Reset monthly allowance
+      - if t.admin?
+        TODO

@@ -1,0 +1,29 @@
+en:
+  slack:
+    user_not_found: "You are not allowed to use bonus points, please contact admin"
+    recipient_not_found: Recipient user is not found or not active
+    recipient_invalid: "This recipient is heartless and cannot receive ♡"
+    command_syntax: "Syntax: `/give @username 100 for abcdef` or `/give history`"
+    invalid_syntax: "Invalid syntax"
+    invalid_reason: "Message is too long or too short"
+    gave_successful: "You gave `%{points} ♡` to @%{recipient}, left with *%{allowance}* this month"
+    gave_announce: "@%{sender} gave `%{points} ♡` to @%{recipient}"
+    insufficient_allowance: "You have insufficient points to give away"
+    system_error: "`SYSTEM ERROR` please notify admin ```%{message}```"
+    help_message_with_balance: "You have *%{allowance}* ♡ left to give this month.\nTotal received *%{balance}* ♡\nSyntax: `/give @username 10 for abcdef`"
+    unable_to_transfer: "Unable to transfer, try again later or contact admin"
+    history:
+      last_10_wrapper: "*Your last 20 transactions:*\n\n%{yield}\n=="
+      item_regular: "%{date} : @%{sender} gave @%{recipient} `%{amount} ♡` for _%{message}_"
+      item_redemption: "%{date} : You redeemed `%{reward}` for `%{amount} ♡`"
+    reward:
+      line_item: "`%{id}` *%{name}* - %{cost}♡"
+      line_item_stock_count: "`%{id}` *%{name}* - %{cost}♡ - %{stock} remaining"
+      your_balance: "You have `%{balance} ♡`"
+      syntax: "Type `/redeem [number]` to redeem"
+      invalid_reward_id: "Invalid reward number"
+      no_longer_available: "This reward is no longer available"
+      insufficient_balance: "You don't have sufficient balance to redeem this reward"
+      redeem_successfully: "You redeemed `%{name}` for %{cost} ♡, you have `%{balance} ♡` left"
+      redeem_announce: "@%{username} redeemed `%{name}`"
+      unable_to_redeem: "Unable to redeem, try again later or contact admin"

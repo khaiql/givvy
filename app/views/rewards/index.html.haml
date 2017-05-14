@@ -1,0 +1,31 @@
+%p#notice= notice
+
+.container
+  .row
+    .col
+      %h1 Rewards
+    .col.text-right
+      = link_to new_reward_path do
+        .btn.btn-primary Add new Rewards
+
+%table.table.table-striped
+  %thead
+    %tr
+      %th
+      %th Name
+      %th Cost
+      %th Stock
+      %th Redeemed
+      %th Visible
+      %th{:colspan => "3"}
+  %tbody
+    - @rewards.each do |reward|
+      %tr
+        %td= reward.image_url
+        %td= reward.name
+        %td= reward.cost
+        %td= reward.stock_count
+        %td= reward.transactions.count
+        %td= reward.visible
+        / %td= link_to 'Show', reward
+        %td= link_to 'Edit', edit_reward_path(reward)

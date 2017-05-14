@@ -1,0 +1,51 @@
+// This file is configuration for "Deploy to Heroku" button
+
+{
+  "name": "Givvy",
+  "description": "Random appreciation for your team",
+  "repository": "https://github.com/TODO",
+  "logo": "http://TODO.png",
+  "keywords": ["givvy", "redeem", "bonus", "reward", "micro-bonus", "appreciation", "gift", "ruby", "rails"],
+  "success_url": "/TODO",
+  "scripts": {
+    "postdeploy": "bundle exec rake db:migrate"
+  },
+  "addons": [
+    {
+      "plan": "heroku-postgresql",
+      "options": {
+        "version": "9.5"
+      }
+    }
+  ],
+  "env": {
+    "TZ": {
+      "description": "Your current timezone, this is important for datetime parsing",
+      "value": "Asia/Ho_Chi_Minh"
+    },
+    "SECRET_TOKEN": {
+      "description": "A secret key for multiple purposes",
+      "generator": "secret"
+    },
+    "SLACK_TOKEN" : {
+      "description": "Important OAuth token from your Slack App",
+      "value": "COPY_FROM_SLACK_APP"
+    },
+    "ADMIN_PASSWORD" : {
+      "description": "Default password to access admin panel",
+      "value": "givvy"
+    },
+    "DEFAULT_ALLOWANCE" : {
+      "description": "Default allowance per user per month",
+      "value": "150"
+    },
+    "DEFAULT_CHANNEL" : {
+      "description": "If announcement mode is public, then the response message will be posted into this default channel",
+      "value": "#general"
+    },
+    "ANNOUNCE_MODE" : {
+      "description": "Send announcement in-channel, where the user posted the command. Other value is 'public'",
+      "value": "in_channel"
+    }
+  },
+}
