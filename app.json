@@ -2,7 +2,7 @@
 
 {
   "name": "Givvy",
-  "description": "Random appreciation for your team",
+  "description": "Candid appreciation for your team",
   "repository": "https://github.com/kentnguyen/givvy",
   "logo": "https://raw.githubusercontent.com/kentnguyen/givvy/master/public/logo.png",
   "keywords": ["givvy", "redeem", "bonus", "reward", "micro-bonus", "appreciation", "gift", "ruby", "rails"],

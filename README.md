@@ -1,12 +1,12 @@
 # Givvy
 
-### Deploy to Heroku
+## Deploy to Heroku
 
 One click deploy
 
 [![Deploy now](https://www.herokucdn.com/deploy/button.svg)](https://www.heroku.com/deploy/?template=https://github.com/kentnguyen/givvy)
 
-### Setting up your Slack App
+## Setting up your Slack App
 
 You must setup your own Slack App manually.
 
@@ -22,11 +22,11 @@ You should setup the following:
 	- `users:read` to read & validate users
 	- `users:read.email` for future features
 
-### Improve performance with caching avatars
+## Improve performance with caching avatars
 
 TODO
 
-### ENV vars
+## ENV vars
 
 This project uses `dotenv` gem to load `.env` (sample in **.env.sample** file)
 
@@ -48,7 +48,7 @@ Send announcement in-channel, where the user posted the command. Other value is 
 `DEFAULT_CHANNEL="#general"`
 If announcement mode is public, then the response message will be posted into this default channel.
 
-### Tech stack
+## Tech stack
 
 - Rudy 2.3
 - Rails 5
