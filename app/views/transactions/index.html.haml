@@ -8,6 +8,7 @@
 %table.table.table-striped
   %thead
     %tr
+      %th ID
       %th Time
       %th Sender
       %th Recipient
@@ -19,6 +20,7 @@
   %tbody
     - @transactions.each do |transaction|
       %tr
+        %td= transaction.id
         %td= format_time(time: transaction.created_at)
         %td= transaction.sender.username
         %td= transaction.recipient.username

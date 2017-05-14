@@ -12,6 +12,7 @@
   %thead
     %tr
       %th
+      %th ID
       %th Name
       %th Cost
       %th Stock
@@ -22,6 +23,7 @@
     - @rewards.each do |reward|
       %tr
         %td= reward.image_url
+        %td= reward.id
         %td= reward.name
         %td= reward.cost
         %td= reward.stock_count
