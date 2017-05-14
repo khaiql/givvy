@@ -59,10 +59,11 @@ class API::V1::SlackController < API::V1::APIController
     # Compose the public announcement message
     public_text = I18n.t('slack.gave_announce', sender:user.username, recipient:recipient.username, points: points)
     private_text = I18n.t('slack.gave_successful', recipient:recipient.username, points: points, allowance: user.allowance)
+    pair_key = slack_encrypt(user.username + "||" + recipient.username)
     attchs = [{
                 title: message,
                 color: '#00AADE',
-                image_url: "#{request.protocol}#{request.host_with_port}/api/v1/slack_photo?s=#{user.username}&r=#{recipient.username}",
+                image_url: "#{request.protocol}#{request.host_with_port}/api/v1/slack_photo?k=#{pair_key}",
               }]
 
     # Announcement to in_channel or public
@@ -142,8 +143,37 @@ class API::V1::SlackController < API::V1::APIController
     render json: { text: I18n.t('slack.system_error', message: e.message + "\n\n" + params[:text]) }
   end
 
-
   def photo
+    # Deprecated handling, to be removed before June '17, kept for backward compatibility
+    if params[:s].present? && params[:r].present? && params[:k].blank?
+      return photo_deprecated
+    end
+
+    # New photo handling with encrypted key 'k'
+    k = params[:k].to_s
+    raise BailException if k.blank?
+
+    # Decrypt string
+    plain = slack_decrypt(encoded_str:k)
+    raise BailException if plain.blank?
+    s = plain.split("||")[0]
+    r = plain.split("||")[1]
+    raise BailException if s.blank? || r.blank?
+
+    # Get/generate photo
+    blob = pair_photo(from_user: s, to_user: r)
+    raise BailException if !blob
+
+    # Render image
+    send_data blob, type: 'image/png', disposition:'inline'
+  rescue BailException
+    redirect_to '/unknown.png'
+  rescue Exception => e
+    render json: { text: I18n.t('slack.system_error', message: e.message) }
+  end
+
+  def photo_deprecated
+    k = params[:k]
     s = params[:s].to_s
     r = params[:r].to_s
     render nothing: true, status: 404 if s.blank? || r.blank?

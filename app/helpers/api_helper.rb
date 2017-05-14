@@ -54,4 +54,22 @@ module APIHelper
     return blob
   end
 
+  def slack_encrypt(plain:)
+    aes = OpenSSL::Cipher.new("AES-256-CBC")
+    aes.encrypt
+    aes.key = Digest::SHA2.digest(ENV["SECRET_TOKEN"])
+    (aes.update(plain) + aes.final).unpack("H*")[0]
+  end
+
+  def slack_decrypt(encoded_str:)
+    begin
+      aes = OpenSSL::Cipher.new("AES-256-CBC")
+      aes.decrypt
+      aes.key = Digest::SHA2.digest(ENV["SECRET_TOKEN"])
+      aes.update([encoded_str].pack("H*")) + aes.final
+    rescue
+      return nil
+    end
+  end
+
 end
