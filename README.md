@@ -4,7 +4,7 @@
 
 One click deploy
 
-[![Deploy now](https://www.herokucdn.com/deploy/button.svg)](https://www.heroku.com/deploy/?template=https://github.com/TODO)
+[![Deploy now](https://www.herokucdn.com/deploy/button.svg)](https://www.heroku.com/deploy/?template=https://github.com/kentnguyen/givvy)
 
 ### Setting up your Slack App
 
@@ -18,9 +18,9 @@ You should setup the following:
 	- `/give` points to `<your_heroku_url>/api/v1/slack`
 	- `/redeem` points to `<your_heroku_url>/api/v1/slack_redeem`
 - OAuth Permissions:
-	- `users:read`
+  - `chat:write:bot` to post as a bot
+	- `users:read` to read & validate users
 	- `users:read.email` for future features
-	- `chat:write:bot`
 
 ### Improve performance with caching avatars
 

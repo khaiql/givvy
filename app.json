@@ -3,10 +3,10 @@
 {
   "name": "Givvy",
   "description": "Random appreciation for your team",
-  "repository": "https://github.com/TODO",
-  "logo": "http://TODO.png",
+  "repository": "https://github.com/kentnguyen/givvy",
+  "logo": "https://raw.githubusercontent.com/kentnguyen/givvy/master/public/logo.png",
   "keywords": ["givvy", "redeem", "bonus", "reward", "micro-bonus", "appreciation", "gift", "ruby", "rails"],
-  "success_url": "/TODO",
+  "success_url": "https://github.com/kentnguyen/givvy/blob/master/README.md",
   "scripts": {
     "postdeploy": "bundle exec rake db:migrate"
   },
