@@ -3,7 +3,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    @users = User.unscoped.all.order(active: :desc, created_at: :desc)
+    @users = User.unscoped.all.order(active: :desc, created_at: :desc).paginate(page: params[:page], per_page: 30)
   end
 
   # GET /users/1

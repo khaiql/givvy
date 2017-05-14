@@ -36,3 +36,6 @@
           - else
             ❌
         %td= link_to 'Edit', edit_user_path(user)
+
+.text-right
+  = will_paginate @users, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
