@@ -50,7 +50,7 @@ If announcement mode is public, then the response message will be posted into th
 
 ## Tech stack
 
-- Rudy 2.3
+- Ruby 2.3
 - Rails 5
 - Postgres DB
 - Custom `.buildpacks` to enable `wkhtmltoX`

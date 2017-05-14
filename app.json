@@ -1,12 +1,10 @@
-// This file is configuration for "Deploy to Heroku" button
-
 {
   "name": "Givvy",
   "description": "Candid appreciation for your team",
   "repository": "https://github.com/kentnguyen/givvy",
   "logo": "https://raw.githubusercontent.com/kentnguyen/givvy/master/public/logo.png",
   "keywords": ["givvy", "redeem", "bonus", "reward", "micro-bonus", "appreciation", "gift", "ruby", "rails"],
-  "success_url": "https://github.com/kentnguyen/givvy/blob/master/README.md",
+  "success_url": "/TODO",
   "scripts": {
     "postdeploy": "bundle exec rake db:migrate"
   },
@@ -16,6 +14,14 @@
       "options": {
         "version": "9.5"
       }
+    },
+    {
+      "plan": "scheduler"
+    }
+  ],
+  "buildpacks": [
+    {
+      "url": "https://github.com/heroku/heroku-buildpack-multi.git"
     }
   ],
   "env": {
@@ -47,5 +53,5 @@
       "description": "Send announcement in-channel, where the user posted the command. Other value is 'public'",
       "value": "in_channel"
     }
-  },
+  }
 }
