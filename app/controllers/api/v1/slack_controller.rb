@@ -68,7 +68,7 @@ class API::V1::SlackController < API::V1::APIController
     # Announcement to in_channel or public
     if ENV['ANNOUNCE_MODE'] == 'in_channel'
       Thread.new {
-        post_to_slack(channel: user.username, text: private_text)
+        post_to_slack(channel: '@'+user.username, text: private_text)
       }
       render json: {
         response_type: 'in_channel',
