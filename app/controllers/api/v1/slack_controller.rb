@@ -59,7 +59,7 @@ class API::V1::SlackController < API::V1::APIController
     # Compose the public announcement message
     public_text = I18n.t('slack.gave_announce', sender:user.username, recipient:recipient.username, points: points)
     private_text = I18n.t('slack.gave_successful', recipient:recipient.username, points: points, allowance: user.allowance)
-    pair_key = slack_encrypt(user.username + "||" + recipient.username)
+    pair_key = slack_encrypt(plain: user.username+"||"+recipient.username)
     attchs = [{
                 title: message,
                 color: '#00AADE',
@@ -89,7 +89,8 @@ class API::V1::SlackController < API::V1::APIController
   rescue BailException => e
     render json: { text: e.message }
   rescue Exception => e
-    render json: { text: I18n.t('slack.system_error', message: e.message + "\n\n" + params[:text]) }
+    p e.backtrace[0..10]
+    render json: { text: I18n.t('slack.system_error', message: e.message + "\n" + e.backtrace[0] + "\n" + params[:text]) }
   end
 
 
@@ -140,7 +141,8 @@ class API::V1::SlackController < API::V1::APIController
   rescue BailException => e
     render json: { text: e.message }
   rescue Exception => e
-    render json: { text: I18n.t('slack.system_error', message: e.message + "\n\n" + params[:text]) }
+    p e.backtrace[0..10]
+    render json: { text: I18n.t('slack.system_error', message: e.message + "\n" + e.backtrace[0] + "\n" + params[:text]) }
   end
 
   def photo
@@ -163,6 +165,7 @@ class API::V1::SlackController < API::V1::APIController
   rescue BailException
     redirect_to '/unknown.png'
   rescue Exception => e
+    p e.backtrace[0..10]
     render json: { text: I18n.t('slack.system_error', message: e.message) }
   end
 
