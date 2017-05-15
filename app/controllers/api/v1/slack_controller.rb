@@ -130,11 +130,11 @@ class API::V1::SlackController < API::V1::APIController
 
       render json: {
         text: I18n.t('slack.reward.redeem_successfully', name:reward.name, cost:reward.cost, balance:user.balance),
-        parse: "full"
+        parse: 'full'
       }
     else
       render json: {
-        text: I18n.t('slack.reward.unable_to_redeem'),
+        text: I18n.t('slack.reward.unable_to_redeem')
       }
     end
   rescue BailException => e
@@ -144,12 +144,6 @@ class API::V1::SlackController < API::V1::APIController
   end
 
   def photo
-    # Deprecated handling, to be removed before June '17, kept for backward compatibility
-    if params[:s].present? && params[:r].present? && params[:k].blank?
-      return photo_deprecated
-    end
-
-    # New photo handling with encrypted key 'k'
     k = params[:k].to_s
     raise BailException if k.blank?
 
@@ -170,23 +164,6 @@ class API::V1::SlackController < API::V1::APIController
     redirect_to '/unknown.png'
   rescue Exception => e
     render json: { text: I18n.t('slack.system_error', message: e.message) }
-  end
-
-  def photo_deprecated
-    k = params[:k]
-    s = params[:s].to_s
-    r = params[:r].to_s
-    render nothing: true, status: 404 if s.blank? || r.blank?
-
-    # Get/generate photo
-    blob = pair_photo(from_user: s.downcase, to_user: r.downcase)
-
-    # Render image
-    if blob == nil
-      render nothing: true, status: 404 if !blob
-    else
-      send_data blob, type: 'image/png', disposition:'inline'
-    end
   end
 
 end
