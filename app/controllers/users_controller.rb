@@ -1,9 +1,14 @@
 class UsersController < ApplicationController
+  include SmartListing::Helper::ControllerExtensions
+  helper  SmartListing::Helper
+
   before_action :set_user, only: [:show, :edit, :update, :destroy]
 
   # GET /users
   def index
-    @users = User.unscoped.all.order(active: :desc, created_at: :desc).paginate(page: params[:page], per_page: 30)
+    users_scope = User.unscoped
+    users_scope = users_scope.where("username LIKE ?", "%#{params[:filter]}%") if params[:filter]
+    @users = smart_listing_create :users, users_scope, partial: "users/listing"
   end
 
   # GET /users/1

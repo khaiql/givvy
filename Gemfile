@@ -18,16 +18,14 @@ gem 'turbolinks', '~> 5'
 gem 'jbuilder', '~> 2.5'
 
 gem 'haml-rails'
+gem 'jquery-rails'
 gem 'bootstrap', '~> 4.0.0.alpha6'
 
 gem 'awesome_print'
 gem 'imgkit'
 
-gem 'firebase' # remove after firebase migration
-gem 'will_paginate', '>= 3.1'
-gem 'will_paginate-bootstrap4'
 gem 'newrelic_rpm'
-
+gem 'smart_listing', :git => 'https://github.com/Datacom/smart_listing'
 
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]

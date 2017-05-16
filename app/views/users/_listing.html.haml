@@ -1,0 +1,33 @@
+- unless smart_listing.empty?
+
+  %table.table.table-striped
+    %thead
+      %tr
+        %th
+        %th= smart_listing.sortable "Username", :username
+        %th Display name
+        %th= smart_listing.sortable "Allowance", :allowance 
+        %th= smart_listing.sortable "Balance", :balance
+        %th Active
+        %th{:colspan => "3"}
+    %tbody
+      - smart_listing.collection.each do |user|
+        %tr
+          %td
+            %img{:height => "25", :src => user.avatar_url}
+          %td
+            =link_to user.username, user_path(user)
+          %td= user.display_name
+          %td= user.allowance
+          %td= user.balance
+          %td
+            - if user.active
+              ✔
+            - else
+              ❌
+          %td= link_to 'Edit', edit_user_path(user)
+
+  = smart_listing.paginate
+
+- else
+  %p.warning No records!

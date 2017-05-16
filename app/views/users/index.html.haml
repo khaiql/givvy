@@ -4,38 +4,14 @@
   .row
     .col
       %h1 Users
+    .col
+      = smart_listing_controls_for(:users) do
+        .input-group.mb-2.mr-sm-2.mb-sm-0
+          .input-group-addon Search
+          %input#inlineFormInputGroup.form-control{placeholder: "Username", name:'filter', type: "text", autocomplete: 'off', value: params[:filter]}
     .col.text-right
       = link_to new_user_path do
         .btn.btn-primary New User
-  
-%table.table.table-striped
-  %thead
-    %tr
-      %th
-      %th Username
-      %th Display name
-      %th Email
-      %th Allowance
-      %th Balance
-      %th Active
-      %th{:colspan => "3"}
-  %tbody
-    - @users.each do |user|
-      %tr
-        %td
-          %img{:height => "25", :src => user.avatar_url}
-        %td
-          =link_to user.username, user_path(user)
-        %td= user.display_name
-        %td= user.email
-        %td= user.allowance
-        %td= user.balance
-        %td
-          - if user.active
-            ✔
-          - else
-            ❌
-        %td= link_to 'Edit', edit_user_path(user)
 
-.text-right
-  = will_paginate @users, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
+
+= smart_listing_render(:users)
