@@ -30,5 +30,4 @@
         %td= transaction.transaction_type.capitalize
         %td= transaction.group
 
-.text-right
-  = will_paginate @transactions, renderer: WillPaginate::ActionView::BootstrapLinkRenderer
+= paginate @transactions, remote: true, theme: 'twitter-bootstrap-4'
