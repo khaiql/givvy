@@ -5,15 +5,17 @@ class User < ApplicationRecord
 
   before_create :set_default_allowance
 
-  def self.default_scope
-    where(active: true)
-  end
+  scope :active, -> { where(active: true).order(created_at: :desc) }
 
   def transfer_points(recipient_user:, points:, message:, tags: [])
     if self.allowance >= points
       recipient_user.balance += points
       self.allowance -= points
-      txn = Transaction.new(sender: self, recipient: recipient_user, amount: points, message: message, tags: tags)
+      txn = Transaction.new(sender: self,
+                            recipient: recipient_user,
+                            amount: points,
+                            message: message,
+                            tags: tags)
       ActiveRecord::Base.transaction do
         self.save!
         recipient_user.save!
@@ -25,6 +27,23 @@ class User < ApplicationRecord
   rescue ActiveRecord::RecordInvalid => exception
     p exception.message
     return false
+  end
+
+  def self.award_or_deduct_points(users:, points:, message:, tags: [])
+    system_user = User.find_by_username('system')
+
+    ActiveRecord::Base.transaction do
+      users.each do |u|
+        u.balance += points
+        u.save
+        Transaction.create(sender:system_user,
+                           recipient: u,
+                           amount: points,
+                           message: message,
+                           transaction_type: Transaction.transaction_types[:admin],
+                           tags: tags)
+      end
+    end
   end
 
   private

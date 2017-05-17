@@ -27,3 +27,10 @@ en:
       redeem_successfully: "You redeemed `%{name}` for %{cost} ♡, you have `%{balance} ♡` left"
       redeem_announce: "@%{username} redeemed `%{name}`"
       unable_to_redeem: "Unable to redeem, try again later or contact admin"
+  admin_api:
+    user_penalized:
+      one: "This user was `penalized` %{points} ♡: %{message} %{tags}"
+      other: "%{count} users was penalized %{points} ♡: %{message} %{tags}"
+    user_awarded:
+      one: "This user was awared `%{points} ♡`: %{message} %{tags}"
+      other: "%{count} users was awarded `%{points} ♡`: %{message} %{tags}"

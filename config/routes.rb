@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       post '/slack', to: 'slack#index'
       post '/slack_redeem', to: 'slack#redeem'
       get  '/slack_photo', to: 'slack#photo'
+      post '/admin', to: 'admin#give'
     end
   end
 end

@@ -6,7 +6,7 @@ class UsersController < ApplicationController
 
   # GET /users
   def index
-    users_scope = User.unscoped
+    users_scope = User.order(created_at: :desc)
     users_scope = users_scope.where("username LIKE ?", "%#{params[:filter]}%") if params[:filter]
     @users = smart_listing_create :users, users_scope, partial: "users/listing"
   end
@@ -54,7 +54,7 @@ class UsersController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_user
-      @user = User.unscoped.find(params[:id])
+      @user = User.find(params[:id])
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

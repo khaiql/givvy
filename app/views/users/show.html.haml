@@ -23,6 +23,8 @@
             = t.amount
             ♡
           %i= t.message
+          \-
+          =t.tags.join ' '
         - else
           received from 
           %b= t.sender.username
@@ -30,6 +32,8 @@
             = t.amount
             ♡ 
           %i= t.message
+          \-
+          =t.tags.join ' '
       - if t.redemption?
         redeemed 
         %b=t.message
@@ -40,4 +44,9 @@
       - if t.monthly_reset?
         Reset monthly allowance
       - if t.admin?
-        TODO
+        .badge.badge-warning
+          %b=t.amount
+          ♡
+        %i=t.message
+        \-
+        =t.tags.join ' '

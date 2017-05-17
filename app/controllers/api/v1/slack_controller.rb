@@ -16,11 +16,8 @@ class API::V1::SlackController < API::V1::APIController
     response_text = nil
 
     # Find existing user
-    user = User.find_by_username(params[:user_name])
-    raise BailException, I18n.t('slack.user_not_found') if user == nil
-
-    # Verify Slack user id vs external_id
-    render :nothing, status: 401 if params[:user_id] != user.external_id
+    user = User.active.find_by_username(params[:user_name])
+    raise BailException, I18n.t('slack.user_not_found') if user == nil || params[:user_id] != user.external_id
 
     # Handle action 'help'
     if action == "help" || text.blank?
@@ -48,7 +45,7 @@ class API::V1::SlackController < API::V1::APIController
     raise BailException, I18n.t('slack.insufficient_allowance') if points > user.allowance
 
     # Check recipient
-    recipient = User.find_by_username(recp_username.downcase)
+    recipient = User.active.find_by_username(recp_username.downcase)
     raise BailException, I18n.t('slack.recipient_not_found') if recipient == nil
     raise BailException, I18n.t('slack.recipient_invalid') if recipient.id == user.id
 
@@ -101,11 +98,8 @@ class API::V1::SlackController < API::V1::APIController
     raise BailException, I18n.t('slack.reward.invalid_reward_id') if text.present? && rid < 1
 
     # Find existing user
-    user = User.find_by_username(params[:user_name])
-    raise BailException, I18n.t('slack.user_not_found') if user == nil
-
-    # Verify Slack user id vs external_id
-    render :nothing, status: 401 if params[:user_id] != user.external_id
+    user = User.active.find_by_username(params[:user_name])
+    raise BailException, I18n.t('slack.user_not_found') if user == nil || params[:user_id] != user.external_id
 
     # Print syntax
     if text.blank?
