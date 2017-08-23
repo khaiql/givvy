@@ -28,6 +28,8 @@ gem 'newrelic_rpm'
 gem 'smart_listing', :git => 'https://github.com/Datacom/smart_listing'
 gem 'bootstrap4-kaminari-views'
 
+gem 'forest_liana'
+
 group :development, :test do
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
   gem 'capybara', '~> 2.13.0'
