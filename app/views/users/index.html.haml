@@ -3,7 +3,7 @@
 .container
   .row
     .col
-      %h1 Users
+      %h1 Users (#{User.count})
     .col
       = smart_listing_controls_for(:users) do
         .input-group.mb-2.mr-sm-2.mb-sm-0
@@ -12,6 +12,5 @@
     .col.text-right
       = link_to new_user_path do
         .btn.btn-primary New User
-
 
 = smart_listing_render(:users)

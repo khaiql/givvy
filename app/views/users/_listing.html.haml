@@ -5,7 +5,6 @@
       %tr
         %th
         %th= smart_listing.sortable "Username", :username
-        %th Display name
         %th= smart_listing.sortable "Allowance", :allowance 
         %th= smart_listing.sortable "Balance", :balance
         %th Active
@@ -17,7 +16,6 @@
             %img{:height => "25", :src => user.avatar_url}
           %td
             =link_to user.username, user_path(user)
-          %td= user.display_name
           %td= user.allowance
           %td= user.balance
           %td
