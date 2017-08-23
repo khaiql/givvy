@@ -52,6 +52,14 @@
     "ANNOUNCE_MODE" : {
       "description": "Send announcement in-channel, where the user posted the command. Other value is 'public'",
       "value": "in_channel"
+    },
+    "FOREST_ENV_SECRET" : {
+      "description": "Get a pair of secret keys from forestadmin.com",
+      "value": "---"
+    },
+    "FOREST_AUTH_SECRET" : {
+      "description": "Get a pair of secret keys from forestadmin.com",
+      "value": "---"
     }
   }
 }
