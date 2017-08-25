@@ -7,6 +7,7 @@ class API::V1::SlackController < API::V1::APIController
     # TODO
 
     # Sanitize inputs
+    cmd  = params[:command]
     text = params[:text]
     action = text.split.first.to_s.downcase
     points = text[/\s(\d+)/].to_i
@@ -21,7 +22,7 @@ class API::V1::SlackController < API::V1::APIController
 
     # Handle action 'help'
     if action == "help" || text.blank?
-      raise BailException, I18n.t('slack.help_message_with_balance', allowance: user.allowance, balance: user.balance)
+      raise BailException, I18n.t('slack.help_message_with_balance', allowance: user.allowance, balance: user.balance, command: cmd)
     end
 
     # Handle action 'history', show last 20 transactions

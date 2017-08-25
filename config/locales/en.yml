@@ -3,14 +3,13 @@ en:
     user_not_found: "You are not allowed to use bonus points, please contact admin"
     recipient_not_found: Recipient user is not found or not active
     recipient_invalid: "This recipient is heartless and cannot receive ♡"
-    command_syntax: "Syntax: `/give @username 100 for abcdef` or `/give history`"
     invalid_syntax: "Invalid syntax"
     invalid_reason: "Message is too long or too short"
     gave_successful: "You gave `%{points} ♡` to @%{recipient}, left with *%{allowance}* this month"
     gave_announce: "@%{sender} gave `%{points} ♡` to @%{recipient}"
     insufficient_allowance: "You have insufficient points to give away"
     system_error: "`SYSTEM ERROR` please notify admin ```%{message}```"
-    help_message_with_balance: "You have *%{allowance}* ♡ left to give this month.\nTotal received *%{balance}* ♡\nSyntax: `/give @username 10 for abcdef`"
+    help_message_with_balance: "You have *%{allowance}* ♡ left to give this month.\nTotal received *%{balance}* ♡\nSyntax: `%{command} @username 10 for abcdef`"
     unable_to_transfer: "Unable to transfer, try again later or contact admin"
     history:
       last_10_wrapper: "*Your last 20 transactions:*\n\n%{yield}\n=="
