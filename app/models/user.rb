@@ -7,6 +7,10 @@ class User < ApplicationRecord
 
   scope :active, -> { where(active: true).order(created_at: :desc) }
 
+  def user_id
+    return self.external_id
+  end
+
   def transfer_points(recipient_user:, points:, message:, tags: [])
     if self.allowance >= points
       recipient_user.balance += points

@@ -11,14 +11,14 @@ class API::V1::SlackController < API::V1::APIController
     text = params[:text]
     action = text.split.first.to_s.downcase
     points = text[/\s(\d+)/].to_i
-    recp_username = text.scan(/@?(\S+)\b/).flatten.first
+    recp_username = text.scan(/@(\S+)\b/).flatten.first
     message = text.scan(/\d+\s(for)?(.+)/).flatten.last
     tags    = text.scan(/(#\S+)/).flatten
     response_text = nil
 
     # Find existing user
-    user = User.active.find_by_username(params[:user_name])
-    raise BailException, I18n.t('slack.user_not_found') if user == nil || params[:user_id] != user.external_id
+    user = User.active.find_by_external_id(params[:user_id])
+    raise BailException, I18n.t('slack.user_not_found') if user == nil
 
     # Handle action 'help'
     if action == "help" || text.blank?
@@ -30,7 +30,7 @@ class API::V1::SlackController < API::V1::APIController
       transactions = Transaction.for_user(user.id).limit(20)
       text = transactions.map do |t|
         if t.regular?
-          I18n.t('slack.history.item_regular', date: format_time(time: t.created_at), sender: t.sender.username, recipient: t.recipient.username, amount: t.amount, message: t.message)
+          I18n.t('slack.history.item_regular', date: format_time(time: t.created_at), sender: t.sender.user_id, recipient: t.recipient.user_id, amount: t.amount, message: t.message)
         elsif t.redemption?
           I18n.t('slack.history.item_redemption', date: format_time(time: t.created_at), amount: t.amount, reward: t.message)
         end
@@ -55,9 +55,9 @@ class API::V1::SlackController < API::V1::APIController
     raise BailException, I18n.t('slack.unable_to_transfer') if !success
 
     # Compose the public announcement message
-    public_text = I18n.t('slack.gave_announce', sender:user.username, recipient:recipient.username, points: points)
-    private_text = I18n.t('slack.gave_successful', recipient:recipient.username, points: points, allowance: user.allowance)
-    pair_key = slack_encrypt(plain: user.username+"||"+recipient.username)
+    public_text = I18n.t('slack.gave_announce', sender:user.user_id, recipient:recipient.user_id, points: points)
+    private_text = I18n.t('slack.gave_successful', recipient:recipient.user_id, points: points, allowance: user.allowance)
+    pair_key = slack_encrypt(plain: user.user_id+"||"+recipient.user_id)
     attchs = [{
                 title: message,
                 color: '#00AADE',
@@ -67,7 +67,7 @@ class API::V1::SlackController < API::V1::APIController
     # Announcement to in_channel or public
     if ENV['ANNOUNCE_MODE'] == 'in_channel'
       Thread.new {
-        post_to_slack(channel: '@'+user.username, text: private_text)
+        post_to_slack(channel: '@'+user.user_id, text: private_text)
       }
       render json: {
         response_type: 'in_channel',
@@ -99,8 +99,8 @@ class API::V1::SlackController < API::V1::APIController
     raise BailException, I18n.t('slack.reward.invalid_reward_id') if text.present? && rid < 1
 
     # Find existing user
-    user = User.active.find_by_username(params[:user_name])
-    raise BailException, I18n.t('slack.user_not_found') if user == nil || params[:user_id] != user.external_id
+    user = User.active.find_by_external_id(params[:user_id])
+    raise BailException, I18n.t('slack.user_not_found') if user == nil
 
     # Print syntax
     if text.blank?
@@ -121,7 +121,7 @@ class API::V1::SlackController < API::V1::APIController
     success = reward.redeem_for(user:user)
     if success
       Thread.new {
-        post_to_slack(channel:ENV['DEFAULT_CHANNEL'], text: I18n.t('slack.reward.redeem_announce', username: user.username, name:reward.name))
+        post_to_slack(channel:ENV['DEFAULT_CHANNEL'], text: I18n.t('slack.reward.redeem_announce', username: user.user_id, name:reward.name))
       }
 
       render json: {
