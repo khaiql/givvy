@@ -91,7 +91,7 @@ GEM
     erubis (2.7.0)
     execjs (2.7.0)
     ffi (1.9.18)
-    forest_liana (1.7.3)
+    forest_liana (1.7.10)
       arel-helpers
       bcrypt
       groupdate
@@ -129,7 +129,7 @@ GEM
       thor (>= 0.14, < 2.0)
     jsonapi-serializers (1.0.0)
       activesupport
-    jwt (1.5.6)
+    jwt (2.0.0)
     kaminari (0.17.0)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -273,4 +273,4 @@ RUBY VERSION
    ruby 2.3.3p222
 
 BUNDLED WITH
-   1.13.6
+   1.14.5
