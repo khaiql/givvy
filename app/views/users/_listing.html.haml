@@ -4,7 +4,8 @@
     %thead
       %tr
         %th
-        %th= smart_listing.sortable "Username", :username
+        %th= smart_listing.sortable "Slack ID", :username
+        %th= smart_listing.sortable "Display Name", :display_name
         %th= smart_listing.sortable "Allowance", :allowance 
         %th= smart_listing.sortable "Balance", :balance
         %th Active
@@ -16,6 +17,8 @@
             %img{:height => "25", :src => user.avatar_url}
           %td
             =link_to user.username, user_path(user)
+          %td
+            =link_to user.display_name, user_path(user)
           %td= user.allowance
           %td= user.balance
           %td

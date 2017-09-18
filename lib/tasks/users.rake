@@ -10,18 +10,18 @@ namespace :users do
     members = json['members']
     members.each do |m|
       next if m['deleted'] || m['is_bot'] || m['is_ultra_restricted'] # Skip bots & guests
-      username = m['name']
-      user = User.find_by_username(username)
-      user = User.new(username: username) if !user
-      user.display_name = m['profile']['real_name']
+      uid = m['id']
+      user = User.find_by_external_id(uid)
+      user = User.new(external_id: uid) if !user
+      user.username     = uid
+      user.display_name = m['profile']['display_name']
       user.email        = m['profile']['email']
       user.avatar_url   = m['profile']['image_48']
-      user.external_id  = m['id']
       if user.avatar_hash != m['profile']['avatar_hash']
         user.avatar_hash = m['profile']['avatar_hash']
         remove_avatar_cache(username: user.username)
       end
-      p user.username if user.save!
+      p "#{user.username} - #{user.display_name}" if user.save!
     end
   end
 
