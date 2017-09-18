@@ -9,14 +9,9 @@ namespace :users do
     json = JSON.parse(raw)
     members = json['members']
     members.each do |m|
-      uid = m['id']
-      user = User.find_by_external_id(uid)
-      if user && (m['deleted'] || m['is_bot'] || m['is_ultra_restricted'])
-        user.active = false # Deactivate bots & guests
-        user.save!
-        next
-      end
-      user = User.new(external_id: uid) if !user
+      user = User.find_or_initialize_by(external_id: m['id'])
+      user.active       = !(m['deleted'] || m['is_bot'] || m['is_ultra_restricted']) # Deactivate bots & guests
+      next if !user.active && !user.persisted?
       user.username     = m['profile']['display_name'] # keep this for now, old username from Slack
       user.display_name = m['profile']['real_name']
       user.email        = m['profile']['email']
