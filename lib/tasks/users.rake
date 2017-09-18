@@ -13,8 +13,8 @@ namespace :users do
       uid = m['id']
       user = User.find_by_external_id(uid)
       user = User.new(external_id: uid) if !user
-      user.username     = uid
-      user.display_name = m['profile']['display_name']
+      user.username     = m['profile']['display_name'] # keep this for now, old username from Slack
+      user.display_name = m['profile']['real_name']
       user.email        = m['profile']['email']
       user.avatar_url   = m['profile']['image_48']
       if user.avatar_hash != m['profile']['avatar_hash']
