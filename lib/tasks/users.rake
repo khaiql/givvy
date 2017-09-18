@@ -9,9 +9,14 @@ namespace :users do
     json = JSON.parse(raw)
     members = json['members']
     members.each do |m|
+      # Ignore records with no update in last 24 hours
+      next if (Time.now-Time.at(m['updated'].to_i)) > 24*3600
+
+      # Ignore non-active users & guests & bot
       user = User.find_or_initialize_by(external_id: m['id'])
-      user.active       = !(m['deleted'] || m['is_bot'] || m['is_ultra_restricted']) # Deactivate bots & guests
+      user.active       = !(m['deleted'] || m['is_bot'] || m['is_ultra_restricted']) 
       next if !user.active && !user.persisted?
+
       user.username     = m['profile']['display_name'] || m['id'] # display_name from slack might be null
       user.display_name = m['profile']['real_name']
       user.email        = m['profile']['email']
@@ -20,7 +25,7 @@ namespace :users do
         user.avatar_hash = m['profile']['avatar_hash']
         remove_avatar_cache(username: user.username)
       end
-      
+
       if user.save
         p "#{user.username} - #{user.display_name} - SAVED"
       else
