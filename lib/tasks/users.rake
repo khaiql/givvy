@@ -12,7 +12,7 @@ namespace :users do
       user = User.find_or_initialize_by(external_id: m['id'])
       user.active       = !(m['deleted'] || m['is_bot'] || m['is_ultra_restricted']) # Deactivate bots & guests
       next if !user.active && !user.persisted?
-      user.username     = m['profile']['display_name'] # keep this for now, old username from Slack
+      user.username     = m['profile']['display_name'] || m['id'] # display_name from slack might be null
       user.display_name = m['profile']['real_name']
       user.email        = m['profile']['email']
       user.avatar_url   = m['profile']['image_48']
@@ -20,7 +20,14 @@ namespace :users do
         user.avatar_hash = m['profile']['avatar_hash']
         remove_avatar_cache(username: user.username)
       end
-      p "#{user.username} - #{user.display_name}" if user.save!
+      
+      if user.save
+        p "#{user.username} - #{user.display_name} - SAVED"
+      else
+        p "#{user.username} - #{user.display_name} - ERROR"
+        ap user.errors.full_messages
+        ap m
+      end
     end
   end
 
