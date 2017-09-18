@@ -6,7 +6,7 @@ module APIHelper
       token: ENV["SLACK_TOKEN"],
       channel: channel,
       text: text,
-      parse: 'full',
+      link_names: true,
       attachments: attachments.to_json
     }
     res = Net::HTTP.post_form(uri, payload)

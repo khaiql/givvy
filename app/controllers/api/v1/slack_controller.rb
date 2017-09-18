@@ -71,7 +71,7 @@ class API::V1::SlackController < API::V1::APIController
       }
       render json: {
         response_type: 'in_channel',
-        parse: 'full',
+        link_names: true,
         text: public_text,
         attachments: attchs
       }
@@ -126,7 +126,7 @@ class API::V1::SlackController < API::V1::APIController
 
       render json: {
         text: I18n.t('slack.reward.redeem_successfully', name:reward.name, cost:reward.cost, balance:user.balance),
-        parse: 'full'
+        link_names: true
       }
     else
       render json: {
