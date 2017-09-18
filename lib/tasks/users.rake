@@ -11,7 +11,7 @@ namespace :users do
     members.each do |m|
       uid = m['id']
       user = User.find_by_external_id(uid)
-      if user && m['deleted'] || m['is_bot'] || m['is_ultra_restricted']
+      if user && (m['deleted'] || m['is_bot'] || m['is_ultra_restricted'])
         user.active = false # Deactivate bots & guests
         user.save!
         next
