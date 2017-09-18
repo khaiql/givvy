@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_many :transactions, foreign_key: "sender_id"
 
-  validates :username, uniqueness: { case_sensitive: false }
+  validates :external_id, uniqueness: { case_sensitive: false }
 
   before_create :set_default_allowance
 
