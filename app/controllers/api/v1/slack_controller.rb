@@ -46,7 +46,7 @@ class API::V1::SlackController < API::V1::APIController
     raise BailException, I18n.t('slack.insufficient_allowance') if points > user.allowance
 
     # Check recipient
-    recipient = User.active.find_by_username(recp_username.downcase)
+    recipient = User.active.where('username = ? OR external_id = ?', recp_username.downcase, recp_username.downcase)
     raise BailException, I18n.t('slack.recipient_not_found') if recipient == nil
     raise BailException, I18n.t('slack.recipient_invalid') if recipient.id == user.id
 
