@@ -19,7 +19,6 @@ namespace :users do
 
       user.username     = m['profile']['display_name'] || m['id'] # display_name from slack might be null
       user.display_name = m['profile']['real_name']
-      user.email        = m['profile']['email']
       user.avatar_url   = m['profile']['image_48']
       if user.avatar_hash != m['profile']['avatar_hash']
         user.avatar_hash = m['profile']['avatar_hash']
