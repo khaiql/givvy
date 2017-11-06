@@ -15,4 +15,6 @@ Rails.application.routes.draw do
       post '/admin', to: 'admin#give'
     end
   end
+
+  match '/health_check', to: 'application#health_check', via: [:get, :head]
 end
