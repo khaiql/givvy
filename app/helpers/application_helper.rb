@@ -1,5 +1,6 @@
-module ApplicationHelper
+require 'open-uri'
 
+module ApplicationHelper
   def format_time(time:, timezone: '')
     timezone = ENV["TZ"] if timezone.blank?
     I18n.l time.in_time_zone(timezone), format: :short
@@ -12,6 +13,7 @@ module ApplicationHelper
       return false
     else
       File.open(file, "w") do |f|
+        puts "#{username}: #{image_url}"
         IO.copy_stream(open(image_url), f)
       end
       p "Downloaded avatar " + username
